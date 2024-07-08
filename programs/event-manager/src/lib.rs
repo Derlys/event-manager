@@ -1,4 +1,7 @@
-use anchor_lang::prelude::*;
+use {anchor_lang::prelude::*,crate::instructions::*};
+
+mod collections;
+mod instructions;
 
 declare_id!("4jne4voX6MxJHP4Q2eUBHZ6uNc8WjzynnuhFXrREBEGd");
 
@@ -6,10 +9,15 @@ declare_id!("4jne4voX6MxJHP4Q2eUBHZ6uNc8WjzynnuhFXrREBEGd");
 pub mod event_manager {
     use super::*;
 
-    pub fn initialize(_ctx: Context<Initialize>) -> Result<()> {
-        Ok(())
-    }
-}
+    pub fn create_event(
+        ctx: Context<CreateEvent>,
+        name: String,
+        ticket_price: u64,
 
-#[derive(Accounts)]
-pub struct Initialize {}
+    ) -> Result<()> {
+
+instructions::create_event::handle(ctx, name, ticket_price)
+    }
+
+    
+}
